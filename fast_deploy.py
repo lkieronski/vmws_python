@@ -14,22 +14,25 @@ if not os.path.exists('./config.json'):
     }
      ''')
 else:
-    f=open("./config.json","r")
+    f = open("./config.json", "r")
     content = f.read()
     f.close
     conf = json.loads(content)
-    
-
 
     # Creating new pyvmws class with credentials
-    vmware = pyvmws(conf['host'], conf['connection'], conf['login'], conf['password'])
-    
+    vmware = pyvmws(
+        conf['host'],
+        conf['connection'],
+        conf['login'],
+        conf['password']
+        )
+
     # Defining templates
     centos_template_id = '3QO9EUNG80LLU7BR362VSREFB9HDA3MV'
 
     # Listing all VM's
     for vm in vmware.get_vms():
-        print('id: {}\tpath: {}'.format(vm['id'],vm['path']))
+        print('id: {}\tpath: {}'.format(vm['id'], vm['path']))
 
     # Making simple lab env
     vmware.duplicate_and_delete_vm(centos_template_id, 'testlab_01')
